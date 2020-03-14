@@ -16,14 +16,23 @@ acme.sh --issue --standalone -d yourdomain.com -k ec-256
 mkdir /etc/trojan
 acme.sh --installcert -d yourdomain.com --fullchain-file /etc/trojan/trojan.crt --key-file /etc/trojan/trojan.key --ecc
 ```
-- 安装Nginx并编辑配置文件
+- 安装Nginx
 ```bash
 apt update
 apt install nginx
-vim /etc/nginx/conf.d/v2ray.conf
+```
+- 移除默认代理组 （注意：**yourdomain.com**请替换为你自己的域名,执行后按**Ctrl+X**退出）
+```bash
+rm /etc/nginx/sites-enabled/default
+nano /etc/nginx/sites-available/yourdomain.com
+```
+- 添加新的代理组并编辑配置文件 （注意：**yourdomain.com**请替换为你自己的域名）
+```bash
+ln -s /etc/nginx/sites-available/yourdomain.com /etc/nginx/sites-enabled/
+vim /etc/nginx/conf.d/about.conf
 ```
 - 将以下内容粘贴 （注意：**yourdomain.com**请替换为你自己的域名，**proxy.com** 请替换为你想镜像的网站,**ip.ip.ip.ip**请替换为你的服务器地址，
-共有4处需要修改）                  
+**共有4处需要修改**）                  
 **切勿替换为墙内不可直连的网站，例如Google/Facebook/Youtube等等。最好也不要替换为服务器在国内的网站，例如 百度/豆瓣 等等**
 ```bash
 server {
@@ -130,6 +139,5 @@ docker run -d --name trojan --restart always --net host -v /etc/trojan:/etc/troj
 点击[这里](https://github.com/charlieethan/Trojan/releases/download/V1.0/Trojan.zip)下载**Windows 64位**客户端
 
 # 注意事项
-1.目前这个项目还处在开发阶段，windows客户端只能*代理端口*，浏览器上网需配合插件使用      
-请点击[链接](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)下载Chrome浏览器插件      
-2.为什么推荐用我的教程搭建而非一键脚本？代码和步骤公开透明，没有后门，保护你的隐私。毕竟你不知道写脚本的那个人，背后是谁
+目前这个项目还处在开发阶段，windows客户端只能*代理端口*，浏览器上网需配合插件使用      
+请点击[链接](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)下载Chrome浏览器插件  
