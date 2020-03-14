@@ -46,7 +46,7 @@ wget -qO- get.docker.com | bash
 docker pull teddysun/trojan
 cd /etc/trojan && vim config.json
 ```
-- 将以下内容粘贴 （注意：**password0**请更改为你自己设置的密码，最好在8位以上，其余部分无需更改，除非你知道自己在做什么）
+- 将以下内容粘贴 （注意：**password0**请更改为**你自己设置的密码**，最好在8位以上，其余部分无需更改，除非你知道自己在做什么）
 ```bash
 {
     "run_type": "server",
@@ -107,9 +107,13 @@ docker run -d --name trojan --restart always --net host -v /etc/trojan:/etc/troj
 
 # 客户端
 *因本人不使用苹果系产品，因此苹果用户请自行寻找其他教程*            
+
 点击[这里](https://github.com/trojan-gfw/igniter/releases)下载**安卓**客户端         
+配置如下： **地址**填你的域名，**端口**填 443 ，**密码**填你刚才设置的密码，其他选项无需更改        
+
 点击[这里](https://github.com/charlieethan/Trojan/releases/download/V1.0/Trojan.zip)下载**Windows 64位**客户端
 
 # 注意事项
-目前这个项目还处在开发阶段，windows客户端只能*代理端口*，浏览器上网需配合插件使用     
-请点击[链接](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)下载Chrome浏览器插件
+1.目前这个项目还处在开发阶段，windows客户端只能*代理端口*，浏览器上网需配合插件使用      
+请点击[链接](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)下载Chrome浏览器插件      
+2.为什么推荐用我的教程搭建而非一键脚本？代码和步骤公开透明，没有后门，保护你的隐私。毕竟你不知道写脚本的那个人，背后是谁
