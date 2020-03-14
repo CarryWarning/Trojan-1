@@ -18,15 +18,17 @@ acme.sh --installcert -d yourdomain.com --fullchain-file /etc/trojan/trojan.crt 
 ```
 - 安装Nginx并编辑配置文件
 ```bash
-apt update && apt install nginx
+apt update
+apt install nginx
 vim /etc/nginx/conf.d/v2ray.conf
 ```
-- 将以下内容粘贴 （注意：**yourdomain.com**请替换为你自己的域名，**proxy.com** 请替换为你想镜像的网站。     
+- 将以下内容粘贴 （注意：**yourdomain.com**请替换为你自己的域名，**proxy.com** 请替换为你想镜像的网站,**ip.ip.ip.ip**请替换为你的服务器地址，
+共有4处需要修改）                  
 **切勿替换为墙内不可直连的网站，例如Google/Facebook/Youtube等等。最好也不要替换为服务器在国内的网站，例如 百度/豆瓣 等等**
 ```bash
 server {
-    listen 80 ;
-    server_name  yourdomain.com;  
+    listen 127.0.0.1:80 default_server;
+    server_name yourdomain.com;
     location / {
         proxy_pass proxy.com;
         proxy_redirect     off;
@@ -37,7 +39,21 @@ server {
         proxy_buffers              4 32k; 
         proxy_busy_buffers_size    64k; 
         proxy_temp_file_write_size 64k; 
-     }
+    }
+
+}
+
+server {
+    listen 127.0.0.1:80;
+    server_name ip.ip.ip.ip;
+    return 301 https://yourdomain.com$request_uri;
+}
+
+server {
+    listen 0.0.0.0:80;
+    listen [::]:80;
+    server_name _;
+    return 301 https://$host$request_uri;
 }
 ```
 - 安装Trojan并编辑配置文件
